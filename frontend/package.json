@@ -4,12 +4,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n web,api -c cyan,magenta \"vite\" \"node server/index.js\"",
+    "dev": "concurrently -n web,api -c cyan,magenta \"vite\" \"node ../backend/server/index.js\"",
     "dev:client": "vite",
-    "server": "node server/index.js",
-    "test:email": "node server/test-smtp.js",
+    "server": "node ../backend/server/index.js",
+    "test:email": "node ../backend/server/test-smtp.js",
     "build": "vite build",
-    "start": "cross-env NODE_ENV=production node server/index.js",
+    "start": "cross-env NODE_ENV=production node ../backend/server/index.js",
     "preview": "vite preview"
   },
   "dependencies": {

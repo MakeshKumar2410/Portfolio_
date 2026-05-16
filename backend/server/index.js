@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-dotenv.config({ path: path.join(__dirname, '../.env') })
+dotenv.config({ path: path.join(__dirname, '../../.env') })
 const app = express()
 const PORT = process.env.PORT || 3001
 const TO_EMAIL = process.env.CONTACT_TO || 'makeshmk2004@gmail.com'
@@ -114,7 +114,7 @@ app.post('/api/contact', async (req, res) => {
 })
 
 if (process.env.NODE_ENV === 'production') {
-  const distPath = path.join(__dirname, '../dist')
+  const distPath = path.join(__dirname, '../../frontend/dist')
   app.use(express.static(distPath))
   app.get('*', (req, res, next) => {
     if (req.path.startsWith('/api')) return next()
