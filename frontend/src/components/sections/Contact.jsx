@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL?.trim() || ''
+const BACKEND_API = BACKEND_URL ? `${BACKEND_URL.replace(/\/$/, '')}/api/contact` : '/api/contact'
 const TO_EMAIL = 'makeshmk2004@gmail.com'
 
 const CONTACT_CARDS = [
@@ -28,7 +30,7 @@ export default function Contact() {
     setStatus('sending')
 
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch(BACKEND_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

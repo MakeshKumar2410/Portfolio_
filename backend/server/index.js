@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-dotenv.config({ path: path.join(__dirname, '../../.env') })
+dotenv.config({ path: path.join(__dirname, '../.env') })
 const app = express()
 const PORT = process.env.PORT || 3001
 const TO_EMAIL = process.env.CONTACT_TO || 'makeshmk2004@gmail.com'

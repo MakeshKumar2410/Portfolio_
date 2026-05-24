@@ -1,0 +1,82 @@
+Deployment Steps for GitHub + Vercel (Frontend and Backend)
+
+1. Prepare your repository
+   - Create a GitHub repository for this project.
+   - In your local project root, initialize Git if needed:
+     git init
+   - Add all files and commit:
+     git add .
+     git commit -m "Initial portfolio project setup"
+   - Add the GitHub remote and push:
+     git remote add origin https://github.com/<your-user>/<your-repo>.git
+     git branch -M main
+     git push -u origin main
+
+2. Verify local environment files
+   - frontend/.env should include:
+     VITE_BACKEND_URL=http://localhost:3001
+   - backend/.env should include SMTP and contact settings:
+     PORT=3001
+     CONTACT_TO=your-email@example.com
+     SMTP_HOST=smtp.gmail.com
+     SMTP_PORT=587
+     SMTP_SECURE=false
+     SMTP_USER=your-smtp-user@example.com
+     SMTP_PASS=your-smtp-password
+   - Do not commit .env files to GitHub; they are already ignored by .gitignore.
+
+3. Test locally before deploying
+   - Install dependencies for frontend and backend:
+     cd frontend
+     npm install
+     cd ../backend
+     npm install
+   - Start the backend server:
+     npm start
+   - Start the frontend development server:
+     cd ../frontend
+     npm run dev
+   - Visit the local frontend URL and confirm the contact form can submit successfully.
+
+4. Deploy the frontend to Vercel
+   - Sign in to Vercel and import your GitHub repository.
+   - Select the frontend project folder as the deployment root.
+   - Configure the frontend project settings:
+     Build command: npm run build
+     Output directory: dist
+   - Add the environment variable in Vercel:
+     VITE_BACKEND_URL=https://<your-backend-url>
+   - Deploy the frontend.
+   - Confirm the frontend is live and the contact form is pointing to the backend URL.
+
+5. Deploy the backend source code to GitHub
+   - The backend code is already in GitHub if you pushed the full repository.
+   - Make sure the `backend/` folder and `backend/server/index.js` remain in the repo.
+   - Use GitHub for source control and version history of backend changes.
+
+6. Deploy the backend service
+Option A: Deploy to a Node-friendly hosting service
+   - Use a host such as Render, Railway, Heroku, or Fly.io.
+   - Connect the same GitHub repository and point the deployment to the `backend/` folder.
+   - Set the environment variables on the host to match `backend/.env`.
+   - Deploy and note the public backend URL, such as https://portfolio-backend.onrender.com.
+Option B: Deploy to Vercel as a serverless backend (requires refactor)
+   - Vercel prefers serverless functions and does not host a long-running Express server by default.
+   - To use Vercel, move backend API routes into Vercel functions and deploy from the repo.
+   - Then set the frontend `VITE_BACKEND_URL` to the deployed Vercel function URL.
+
+7. Finalize frontend/backend integration
+   - In the frontend Vercel project, update `VITE_BACKEND_URL` to the deployed backend URL.
+   - Redeploy the frontend after updating the env var.
+   - Test the live frontend contact form and verify email sending through the backend.
+
+8. Useful GitHub + Vercel workflow
+   - Push code changes to GitHub.
+   - Vercel automatically deploys the frontend from the repo.
+   - If backend is hosted elsewhere, update the frontend `VITE_BACKEND_URL` env variable after backend deployment.
+   - Use GitHub for branch-based development and pull requests.
+
+9. Notes
+   - Keep `.env` files private. Use platform environment variables in Vercel or your backend host.
+   - The backend folder is separated from the frontend folder so both can be managed independently.
+   - The frontend uses local proxy during development and a full backend URL in production.
