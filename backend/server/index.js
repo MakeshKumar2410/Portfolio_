@@ -42,6 +42,7 @@ function createTransporter() {
 app.get('/api/health', (_req, res) => {
   res.json({
     ok: true,
+    message: 'Server is working',
     smtp: Boolean(process.env.SMTP_USER && process.env.SMTP_PASS),
   })
 })
@@ -125,6 +126,7 @@ if (process.env.NODE_ENV === 'production') {
 app.listen(PORT, async () => {
   const smtpReady = Boolean(process.env.SMTP_USER?.trim() && process.env.SMTP_PASS?.trim())
   console.log(`API server running at http://localhost:${PORT}`)
+  console.log('Server is working and ready to receive requests.')
 
   if (!smtpReady) {
     console.log('SMTP NOT configured — add SMTP_USER and SMTP_PASS to .env')

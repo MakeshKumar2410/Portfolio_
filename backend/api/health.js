@@ -13,6 +13,7 @@ export default async function handler(req, res) {
 
   res.json({
     ok: true,
+    message: 'Server is working',
     smtp: Boolean(process.env.SMTP_USER && process.env.SMTP_PASS),
   })
 }
