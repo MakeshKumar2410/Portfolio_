@@ -48,6 +48,10 @@ app.get('/api/health', (_req, res) => {
   })
 })
 
+app.get('/', (_req, res) => {
+  res.send('Portfolio backend is running. Use /api/health to verify the API status.');
+})
+
 app.post('/api/contact', async (req, res) => {
   const name = String(req.body?.name || '').trim()
   const email = String(req.body?.email || '').trim()
