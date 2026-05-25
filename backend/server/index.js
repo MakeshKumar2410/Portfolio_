@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import fs from 'fs'
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import path from 'path'
@@ -116,11 +117,15 @@ app.post('/api/contact', async (req, res) => {
 
 if (process.env.NODE_ENV === 'production') {
   const distPath = path.join(__dirname, '../../frontend/dist')
-  app.use(express.static(distPath))
-  app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api')) return next()
-    res.sendFile(path.join(distPath, 'index.html'))
-  })
+  if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath))
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api')) return next()
+      res.sendFile(path.join(distPath, 'index.html'))
+    })
+  } else {
+    console.log(`Production dist folder not found at ${distPath}; skipping static frontend serve.`)
+  }
 }
 
 app.listen(PORT, async () => {
